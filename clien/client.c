@@ -6,20 +6,12 @@
 #include "string.h"
 #include "unistd.h"
 
-typedef struct Node
-{
-    char key[20];
-    char data[1024];
-    struct Node *next_node;
-} Node;
-
 void main(void)
 {
     struct sockaddr_in server;
     char serv_ip[] = "127.0.0.1";
     char msg_buff[1024];
-    Node node;
-    int key;
+    char data[1024];
 
     server.sin_family = AF_INET;
     server.sin_port = htons(1488);
@@ -35,9 +27,9 @@ void main(void)
         char *msg = fgets(msg_buff, sizeof(msg_buff), stdin);
         send(sock, msg, strlen(msg), 0);
 
-        if (read(sock, node.data, sizeof(node.data)) > 0)
+        if (read(sock, data, sizeof(data)) > 0)
         {
-            printf("%s\n", node.data);
+            printf("%s\n", data);
         }
     }
 
