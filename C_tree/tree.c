@@ -4,35 +4,47 @@
 
 typedef struct Node
 {
-    int val;
+    int value;
     Node *left_node;
     Node *right_node;
 } Node;
 
-Node *create_node(int val)
+Node *create_node(int value)
 {
     Node *node = malloc(sizeof(Node));
-    node->val = val;
+    node->value = value;
     node->left_node = NULL;
     node->right_node = NULL;
     return node;
 }
 
-Node * insert_node(Node *node, int value)
+Node * insert_node(Node *root, int value)
 {
-    if (node == NULL)
+    Node *curr_node = root;
+
+    if (root == NULL) return create_node(value);
+    while(curr_node != NULL)
     {
-        return create_node(value);
+        if (value < curr_node->value)
+        {
+            if (curr_node->left_node == NULL)
+            {
+                curr_node->left_node = create_node(value);
+                break;
+            }
+            curr_node = curr_node->left_node; 
+            
+        } else
+        {
+            if (curr_node->right_node == NULL)
+            {
+                curr_node->right_node = create_node(value);
+                break;
+            }
+            curr_node = curr_node->right_node; 
+        }
     }
-    
-    if (value < node->val)
-    {
-        insert_node(node->left_node, value);
-    } else
-    {
-        insert_node(node->right_node, value);
-    }
-    return node;
+    return root;
 } 
 
 
